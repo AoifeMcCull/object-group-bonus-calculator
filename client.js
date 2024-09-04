@@ -45,8 +45,10 @@ console.log('array of employee data: ',  employees );
 
 
 for(let employee of employees){
+  //check through each employee
+  console.group()
   calculateIndividualEmployeeBonus(employee)
-
+  console.groupEnd()
 }
 
 
@@ -54,7 +56,6 @@ for(let employee of employees){
 // This function will calculate 1 employee's bonus!
 //
 function calculateIndividualEmployeeBonus( employee ) {  
-  // your logic here
 
 /*
    Individual Bonus Rules
@@ -62,67 +63,71 @@ Those who have a rating of a 2 or below should not receive a bonus. DONE
 Those who have a rating of a 3 should receive a base bonus of 4% of their base annual income.DONE
 Those who have a rating of a 4 should receive a base bonus of 6% of their base annual income. DONE
 Those who have a rating of a 5 should receive a base bonus of 10% of their base annual income. DONE
-If their employee number is 4 digits long, this means they have been with the company for longer than 15 years, and should receive an additional 5%.
-However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%.
-No bonus can be above 13% or below 0% total.
+If their employee number is 4 digits long, this means they have been with the company for longer than 15 years, and should receive an additional 5%. DONE
+However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%. DONE
+No bonus can be above 13% or below 0% total. DONE
 */
 
+  //start with a percentBonus of 0
   let percentBonus = 0
 
+  //check the employee's rating and add to the percentBonus as necessary
   percentBonus += checkRating(employee)
 
 
 
   //check employee number, if it's 4 digits long add 5% to the bonus percentage
   if(employee.employeeNumber.length===4){
-    console.log('employeeNumber length === 4, adding 5% to bonus')
+    console.log(employee.name, 'employeeNumber length === 4, adding 5% to bonus')
     percentBonus += 5
   };
 
   //check annual income, if > 65000, remove 1%
 if(employee.annualSalary>65000){
-  console.log('employee annual salary > 65000, removing 1% from bonus')
+  console.log(employee.name, 'employee annual salary > 65000, removing 1% from bonus')
   percentBonus -=1
 };
 
+//employee bonus cannot be more than 13%
 if (percentBonus >= 13) {
-  console.log('employee bonus higher than 13%, reducing to 13')
+  console.log(employee.name, 'employee bonus higher than 13%, reducing to 13')
   percentBonus = 13
-} else if (percentBonus < 0){
-  console.log('employee bonus less than 0, setting to 0')
+} else if (percentBonus < 0){ //employee bonus cannot be less than 0%
+  console.log(employee.name, 'employee bonus less than 0, setting to 0')
   percentBonus = 0
 }
-console.log(percentBonus);
 
   console.log(`percent bonus for ${employee.name} is currently ${percentBonus}`)
-  let bonusNumber = employee.annualSalary * (percentBonus / 100)
+  let bonusNumber = employee.annualSalary * (percentBonus / 100) //this is the dollar number of their bonus
   let employeeBonusData = {
     name: employee.name,
     bonusPercentage: percentBonus,
-    totalCompensation: employee.annualSalary + bonusNumber,
+    totalCompensation: Number(employee.annualSalary) + bonusNumber, //this is their salary + bonus
     totalBonus: bonusNumber
   }
-
+  console.log(employeeBonusData)
   return employeeBonusData
-  
 }
 
 
 function checkRating(employee){
+  console.log(employee.name, 'checking rating')
   switch(employee.reviewRating){
     case 3: 
+      console.log('employee rating is 3, adding 4 to bonusPercent')
       return 4
     case 4:
+      console.log('employee rating is 4, adding 6 to bonusPercent')
       return 6
     case 5:
+      console.log('employee rating is 5, adding 10 to bonusPercent')
       return 10
     default:
+      console.log('employee rating lower than 3 or incorrect data, not changing bonusPercent')
       return 0
   }
 }
 
-
-console.log(checkRating(employees[0]))
 
     // Employee object:
     /*
