@@ -82,11 +82,16 @@ No bonus can be above 13% or below 0% total. DONE
     percentBonus += 5
   };
 
+  //otherwise, just proceed
+
   //check annual income, if > 65000, remove 1%
 if(employee.annualSalary>65000){
   console.log(employee.name, 'employee annual salary > 65000, removing 1% from bonus')
   percentBonus -=1
 };
+//otherwise, just proceed
+
+//clamp the bonus percent between 0 and 13
 
 //employee bonus cannot be more than 13%
 if (percentBonus >= 13) {
@@ -96,6 +101,7 @@ if (percentBonus >= 13) {
   console.log(employee.name, 'employee bonus less than 0, setting to 0')
   percentBonus = 0
 }
+//if employee bonus >0 and <13, just proceed
 
   console.log(`percent bonus for ${employee.name} is currently ${percentBonus}`)
   let bonusNumber = employee.annualSalary * (percentBonus / 100) //this is the dollar number of their bonus
